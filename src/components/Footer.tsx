@@ -2,6 +2,8 @@ import React from 'react';
 import { MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="py-12 px-4 border-t border-white/10">
       <div className="max-w-6xl mx-auto">
@@ -19,10 +21,10 @@ const Footer: React.FC = () => {
               Réponse en moins de 30&nbsp;secondes, 24h/24.
             </p>
             <div className="flex space-x-4">
-              <a href="mailto:hello@speedlead.ca" className="text-gray-400 hover:text-electric-teal transition-colors">
+              <a href="mailto:w.gharbi.tangerine@gmail.com" className="text-gray-400 hover:text-electric-teal transition-colors">
                 <Mail className="w-5 h-5" />
               </a>
-              <a href="tel:+15141234567" className="text-gray-400 hover:text-electric-teal transition-colors">
+              <a href="tel:+15146064186" className="text-gray-400 hover:text-electric-teal transition-colors">
                 <Phone className="w-5 h-5" />
               </a>
             </div>
@@ -55,7 +57,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
             <MapPin className="w-4 h-4" />
-            <span>© 2024 SpeedLead Montréal</span>
+            <span>© {year} SpeedLead Montréal</span>
           </div>
           
           <div className="flex space-x-6 text-sm">
@@ -65,8 +67,8 @@ const Footer: React.FC = () => {
             <a href="#terms" className="text-gray-400 hover:text-white transition-colors">
               Conditions
             </a>
-            <a href="mailto:hello@speedlead.ca" className="text-electric-teal hover:text-electric-teal/80 transition-colors">
-              hello@speedlead.ca
+            <a href="mailto:w.gharbi.tangerine@gmail.com" className="text-electric-teal hover:text-electric-teal/80 transition-colors">
+              w.gharbi.tangerine@gmail.com
             </a>
           </div>
         </div>

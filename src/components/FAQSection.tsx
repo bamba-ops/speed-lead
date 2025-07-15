@@ -87,7 +87,7 @@ const FAQSection: React.FC = () => {
             Vous avez d'autres questions ?
           </p>
           <button className="text-electric-teal hover:text-electric-teal/80 font-semibold">
-            Contactez-nous → hello@speedlead.ca
+            Contactez-nous → w.gharbi.tangerine@gmail.com
           </button>
         </div>
       </div>

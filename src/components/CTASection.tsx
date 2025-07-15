@@ -1,7 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (opts: { url: string }) => void;
+    };
+  }
+}
+
 const CTASection: React.FC = () => {
+  const calendlyUrl = 'https://calendly.com/w-gharbi-tangerine/demo-speedlead';
+
+  // 1. Injection du CSS & JS Calendly une seule fois
+  useEffect(() => {
+    // CSS Calendly
+    if (!document.getElementById('calendly-widget-css')) {
+      const link = document.createElement('link');
+      link.id = 'calendly-widget-css';
+      link.href = 'https://assets.calendly.com/assets/external/widget.css';
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    // JS Calendly
+    if (!document.getElementById('calendly-widget-js')) {
+      const script = document.createElement('script');
+      script.id = 'calendly-widget-js';
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  // 2. Ouverture du popup Calendly
+  const openCalendly = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (window.Calendly?.initPopupWidget) {
+      window.Calendly.initPopupWidget({ url: calendlyUrl });
+    } else {
+      // fallback si le script n'est pas encore chargé
+      window.open(calendlyUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <section className="py-20 px-4 bg-gradient-to-r from-electric-teal/10 to-blue-500/10 relative overflow-hidden">
       {/* Background Pattern */}
@@ -40,14 +81,16 @@ const CTASection: React.FC = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="bg-electric-teal text-black font-bold px-8 py-4 rounded-full hover:bg-electric-teal/90 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 text-lg">
+          <a
+            href="#"
+            onClick={openCalendly}
+            className="bg-electric-teal text-black font-bold px-8 py-4 rounded-full hover:bg-electric-teal/90 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 text-lg"
+          >
             <span>Réserver ma démo gratuite</span>
             <ArrowRight className="w-5 h-5" />
-          </button>
+          </a>
           
-          <button className="border border-electric-teal text-electric-teal font-semibold px-8 py-4 rounded-full hover:bg-electric-teal hover:text-black transition-all duration-300">
-            Voir les tarifs
-          </button>
+      
         </div>
 
         {/* Trust Indicators */}
@@ -66,15 +109,7 @@ const CTASection: React.FC = () => {
           </div>
         </div>
 
-        {/* Urgency */}
-        <div className="mt-8 bg-red-500/10 border border-red-500/20 rounded-2xl p-6">
-          <p className="text-red-400 font-semibold mb-2">
-            ⚡ Offre limitée - Janvier 2024
-          </p>
-          <p className="text-gray-300">
-            Configuration gratuite (valeur 500$) pour les 50 premiers agents qui s'inscrivent ce mois
-          </p>
-        </div>
+    
       </div>
     </section>
   );

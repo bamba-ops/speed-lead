@@ -15,6 +15,14 @@ interface ChatMessage {
   timestamp: string;
 }
 
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (opts: { url: string }) => void;
+    };
+  }
+}
+
 const ChatDemo: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
@@ -29,48 +37,31 @@ const ChatDemo: React.FC = () => {
       { id: 2, text: "Hello! I'm the agent's assistant. What's your preferred viewing time?", isBot: true, timestamp: "21:45" },
     ],
     [
-      { id: 1, text: "Disponible pour une visite ce weekend?", isBot: false, timestamp: "09:15" },
+      { id: 1, text: "Disponible pour une visite ce weekend ?", isBot: false, timestamp: "09:15" },
       { id: 2, text: "Parfait! Samedi ou dimanche vous convient mieux ?", isBot: true, timestamp: "09:15" },
     ],
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const sequence = chatSequences[currentStep];
-      
-      // Clear previous messages
+      const seq = chatSequences[(currentStep + 1) % chatSequences.length];
       setMessages([]);
-      
-      // Add first message (lead)
-      setTimeout(() => {
-        setMessages([sequence[0]]);
-      }, 100);
-      
-      // Add bot response after 800ms
-      setTimeout(() => {
-        setMessages(sequence);
-      }, 800);
-      
-      // Move to next sequence
-      setCurrentStep((prev) => (prev + 1) % chatSequences.length);
+      setTimeout(() => setMessages([seq[0]]), 100);
+      setTimeout(() => setMessages(seq), 800);
+      setCurrentStep((s) => (s + 1) % chatSequences.length);
     }, 6000);
 
-    // Initial load
-    const sequence = chatSequences[0];
-    setTimeout(() => setMessages([sequence[0]]), 100);
-    setTimeout(() => setMessages(sequence), 800);
+    // initial
+    setTimeout(() => setMessages([chatSequences[0][0]]), 100);
+    setTimeout(() => setMessages(chatSequences[0]), 800);
 
     return () => clearInterval(interval);
   }, [currentStep]);
 
   return (
     <div className="relative mx-auto w-80 h-[640px] bg-black rounded-[3rem] p-2 shadow-2xl">
-      {/* iPhone Frame */}
       <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden relative">
-        {/* Notch */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-6 bg-black rounded-b-2xl z-10"></div>
-        
-        {/* Status Bar */}
         <div className="flex justify-between items-center px-8 pt-3 pb-2 text-black text-sm font-medium">
           <span>9:41</span>
           <div className="flex space-x-1">
@@ -79,8 +70,6 @@ const ChatDemo: React.FC = () => {
             <div className="w-6 h-2 bg-black rounded-sm"></div>
           </div>
         </div>
-
-        {/* Chat Header */}
         <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-electric-teal rounded-full flex items-center justify-center">
@@ -92,31 +81,27 @@ const ChatDemo: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Chat Messages */}
         <div className="flex-1 bg-gray-50 px-4 py-4 space-y-4 h-96 overflow-hidden">
-          {messages.map((message) => (
+          {messages.map((m) => (
             <div
-              key={`${currentStep}-${message.id}`}
-              className={`flex ${message.isBot ? 'justify-start' : 'justify-end'} animate-chat-bubble`}
+              key={`${currentStep}-${m.id}`}
+              className={`flex ${m.isBot ? 'justify-start' : 'justify-end'} animate-chat-bubble`}
             >
               <div
                 className={`max-w-xs px-4 py-3 rounded-2xl ${
-                  message.isBot
+                  m.isBot
                     ? 'bg-electric-teal text-white rounded-bl-md'
                     : 'bg-white text-gray-900 rounded-br-md shadow-sm border border-gray-200'
                 }`}
               >
-                <p className="text-sm">{message.text}</p>
-                <p className={`text-xs mt-1 ${message.isBot ? 'text-blue-100' : 'text-gray-500'}`}>
-                  {message.timestamp}
+                <p className="text-sm">{m.text}</p>
+                <p className={`text-xs mt-1 ${m.isBot ? 'text-blue-100' : 'text-gray-500'}`}>
+                  {m.timestamp}
                 </p>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Input Area */}
         <div className="bg-white border-t border-gray-200 px-4 py-3">
           <div className="flex items-center space-x-3">
             <div className="flex-1 bg-gray-100 rounded-full px-4 py-2">
@@ -133,10 +118,39 @@ const ChatDemo: React.FC = () => {
 };
 
 const App: React.FC = () => {
+  const calendlyUrl = 'https://calendly.com/w-gharbi-tangerine/demo-speedlead';
+
+  // inject Calendly CSS & JS once
+  useEffect(() => {
+    if (!document.getElementById('calendly-widget-css')) {
+      const link = document.createElement('link');
+      link.id = 'calendly-widget-css';
+      link.href = 'https://assets.calendly.com/assets/external/widget.css';
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    if (!document.getElementById('calendly-widget-js')) {
+      const script = document.createElement('script');
+      script.id = 'calendly-widget-js';
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  // open Calendly popup (or fallback)
+  const openCalendly = () => {
+    if (window.Calendly?.initPopupWidget) {
+      window.Calendly.initPopupWidget({ url: calendlyUrl });
+    } else {
+      window.open(calendlyUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white font-inter">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col justify-center items-center px-4 py-20 pt-32 relative">
         <div className="max-w-7xl mx-auto text-center">
@@ -146,10 +160,11 @@ const App: React.FC = () => {
             <br />
             – même à 2&nbsp;h du matin.
           </h1>
-          
+
           <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-16 max-w-4xl mx-auto">
-            Bot SMS&nbsp;AI bilingue <span className="text-electric-teal font-semibold">FR/EN</span> pour agents immobiliers qui
-            qualifie vos prospects automatiquement et vous les transfert en temps&nbsp;réel.
+            Bot SMS&nbsp;AI bilingue <span className="text-electric-teal font-semibold">FR/EN</span> pour agents
+            immobiliers qui qualifie vos prospects automatiquement et vous les transfert en
+            temps&nbsp;réel.
           </h2>
 
           {/* Interactive Demo */}
@@ -160,7 +175,7 @@ const App: React.FC = () => {
       </section>
 
       <ProblemSection />
-      
+
       {/* Proof Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
@@ -183,47 +198,17 @@ const App: React.FC = () => {
 
       <WithWithoutSection />
       <FeaturesSection />
-      
-      {/* How It Works */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-sf-pro text-3xl md:text-5xl font-bold mb-16">Comment ça marche</h2>
-          
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-electric-teal/20 rounded-full flex items-center justify-center mb-6">
-                <Target className="w-8 h-8 text-electric-teal" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Capture</h3>
-              <p className="text-gray-400">Réception automatique des leads Centris</p>
-            </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-electric-teal/20 rounded-full flex items-center justify-center mb-6">
-                <MessageCircle className="w-8 h-8 text-electric-teal" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Qualifie</h3>
-              <p className="text-gray-400">Questions intelligentes pour qualifier le prospect</p>
-            </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-electric-teal/20 rounded-full flex items-center justify-center mb-6">
-                <Zap className="w-8 h-8 text-electric-teal" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Transfert</h3>
-              <p className="text-gray-400">Lead qualifié envoyé en temps réel</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Pricing */}
       <section id="tarifs" className="py-20 px-4">
         <div className="max-w-md mx-auto">
           <div className="bg-white/5 backdrop-blur-sm border border-electric-teal/30 rounded-3xl p-8 text-center">
             <h3 className="text-2xl font-bold mb-4">Starter</h3>
-            <div className="text-5xl font-bold text-electric-teal mb-6">$149<span className="text-lg text-gray-400">/mo</span></div>
-            
+            <div className="text-5xl font-bold text-electric-teal mb-6">
+              $149
+              <span className="text-lg text-gray-400">/mo</span>
+            </div>
+
             <ul className="space-y-4 mb-8">
               <li className="flex items-center justify-center space-x-3">
                 <CheckCircle className="w-5 h-5 text-electric-teal" />
@@ -238,8 +223,11 @@ const App: React.FC = () => {
                 <span>Annulable quand vous voulez</span>
               </li>
             </ul>
-            
-            <button className="w-full bg-electric-teal text-black font-semibold py-4 rounded-full hover:bg-electric-teal/90 transition-colors">
+
+            <button
+              onClick={openCalendly}
+              className="w-full bg-electric-teal text-black font-semibold py-4 rounded-full hover:bg-electric-teal/90 transition-colors"
+            >
               Commencer maintenant
             </button>
           </div>
@@ -252,14 +240,20 @@ const App: React.FC = () => {
 
       {/* Sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-black/90 backdrop-blur-sm border-t border-white/10 md:hidden">
-        <button className="w-full bg-electric-teal text-black font-semibold py-4 rounded-full hover:bg-electric-teal/90 transition-colors">
+        <button
+          onClick={openCalendly}
+          className="w-full bg-electric-teal text-black font-semibold py-4 rounded-full hover:bg-electric-teal/90 transition-colors"
+        >
           Réserver ma démo 15 min
         </button>
       </div>
 
       {/* Desktop CTA */}
       <div className="hidden md:block fixed bottom-8 right-8">
-        <button className="bg-electric-teal text-black font-semibold px-8 py-4 rounded-full hover:bg-electric-teal/90 transition-all duration-300 transform hover:scale-105 shadow-2xl">
+        <button
+          onClick={openCalendly}
+          className="bg-electric-teal text-black font-semibold px-8 py-4 rounded-full hover:bg-electric-teal/90 transition-all duration-300 transform hover:scale-105 shadow-2xl"
+        >
           Réserver ma démo 15 min
         </button>
       </div>
