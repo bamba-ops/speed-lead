@@ -61,21 +61,24 @@ const Footer: React.FC = () => {
             <span>© {year} SpeedLead Montréal</span>
           </div>
 
-          {/* Walid sur TikTok */}
+          {/* Intro & Walid sur TikTok */}
           <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
             <img
-              src="/walid.jpg"
+              src="https://lh3.googleusercontent.com/ogw/AF2bZyiVyvuxtssMkOk-6s_1iSP2Q4ahVxubRUVxtsCc309Uc38=s64-c-mo"
               alt="Walid"
               className="w-6 h-6 rounded-full"
             />
-            <a
-              href="https://www.tiktok.com/@bambalerequin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm hover:text-electric-teal transition-colors"
-            >
-              Walid sur TikTok
-            </a>
+            <span className="text-sm">
+              C'est moi, Walid – suivez mon travail sur{' '}
+              <a
+                href="https://www.tiktok.com/@bambalerequin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-electric-teal transition-colors"
+              >
+                @bambalerequin
+              </a>
+            </span>
           </div>
 
           {/* Legal & Contact Links */}
