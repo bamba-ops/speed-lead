@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, Target, Zap, ArrowRight, CheckCircle } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Header';
 import ProblemSection from './components/ProblemSection';
 import WithWithoutSection from './components/WithWithoutSection';
@@ -149,6 +150,8 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white font-inter">
+      <Analytics />
+
       <Header />
 
       {/* Hero Section */}

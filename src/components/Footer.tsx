@@ -55,11 +55,30 @@ const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+          {/* Copyright */}
           <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
             <MapPin className="w-4 h-4" />
             <span>© {year} SpeedLead Montréal</span>
           </div>
-          
+
+          {/* Walid sur TikTok */}
+          <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
+            <img
+              src="/walid.jpg"
+              alt="Walid"
+              className="w-6 h-6 rounded-full"
+            />
+            <a
+              href="https://www.tiktok.com/@bambalerequin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm hover:text-electric-teal transition-colors"
+            >
+              Walid sur TikTok
+            </a>
+          </div>
+
+          {/* Legal & Contact Links */}
           <div className="flex space-x-6 text-sm">
             <a href="#privacy" className="text-gray-400 hover:text-white transition-colors">
               Confidentialité
