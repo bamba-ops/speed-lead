@@ -10,15 +10,15 @@ const FAQSection: React.FC = () => {
       answer: "SpeedLead se connecte automatiquement à votre compte Centris via API sécurisée. Aucune configuration technique requise - nous nous occupons de tout en 24h."
     },
     {
-      question: "Que se passe-t-il si le bot ne peut pas répondre ?",
-      answer: "Si la conversation devient trop complexe, le bot transfère immédiatement vers vous avec tout l'historique. Vous gardez toujours le contrôle final."
+      question: "Que se passe-t-il si le bot AI ne peut pas répondre ?",
+      answer: "Si la conversation devient trop complexe, le bot AI transfère immédiatement vers vous avec tout l'historique. Vous gardez toujours le contrôle final."
     },
     {
-      question: "Les prospects savent-ils qu'ils parlent à un bot ?",
-      answer: "Oui, transparence totale. Le bot se présente comme 'l'assistant de l'agent' dès le premier message. Les prospects apprécient la réactivité."
+      question: "Les prospects savent-ils qu'ils parlent à un bot AI ?",
+      answer: "Oui, transparence totale. Le bot AI se présente comme 'l'assistant de l'agent' dès le premier message. Les prospects apprécient la réactivité."
     },
     {
-      question: "Puis-je personnaliser les questions du bot ?",
+      question: "Puis-je personnaliser les questions du bot AI ?",
       answer: "Absolument. Vous définissez les questions de qualification selon votre marché : budget, timeline, type de propriété, secteur géographique, etc."
     },
     {
@@ -34,7 +34,7 @@ const FAQSection: React.FC = () => {
       answer: "Garantie 30 jours satisfait ou remboursé. Si SpeedLead ne vous fait pas gagner au moins un mandat supplémentaire, remboursement intégral."
     },
     {
-      question: "Le bot fonctionne-t-il avec d'autres plateformes ?",
+      question: "Le bot AI fonctionne-t-il avec d'autres plateformes ?",
       answer: "Actuellement optimisé pour Centris. Intégrations avec DuProprio et Kijiji en développement. Contactez-nous pour vos besoins spécifiques."
     }
   ];

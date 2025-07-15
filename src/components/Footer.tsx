@@ -15,8 +15,8 @@ const Footer: React.FC = () => {
               <span className="text-white font-bold text-xl">SpeedLead</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              L'assistant IA qui transforme vos leads Centris en mandats automatiquement. 
-              Réponse en moins de 30 secondes, 24h/24.
+              Le bot&nbsp;AI qui transforme vos leads Centris en mandats automatiquement.
+              Réponse en moins de 30&nbsp;secondes, 24h/24.
             </p>
             <div className="flex space-x-4">
               <a href="mailto:hello@speedlead.ca" className="text-gray-400 hover:text-electric-teal transition-colors">

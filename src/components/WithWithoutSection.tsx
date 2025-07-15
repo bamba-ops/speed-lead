@@ -4,11 +4,11 @@ import { Check, X } from 'lucide-react';
 const WithWithoutSection: React.FC = () => {
   const comparisons = [
     {
-      with: "Réponse en < 30 secondes 24/7",
+      with: "Réponse AI en < 30 secondes 24/7",
       without: "Réponse manuelle en heures/jours"
     },
     {
-      with: "Qualification automatique intelligente",
+      with: "Qualification AI automatique intelligente",
       without: "Appels à froid non qualifiés"
     },
     {
@@ -16,7 +16,7 @@ const WithWithoutSection: React.FC = () => {
       without: "Leads perdus dans les emails"
     },
     {
-      with: "Bilingue FR/EN automatique",
+      with: "Bilingue AI FR/EN automatique",
       without: "Barrière linguistique = leads perdus"
     },
     {
@@ -34,7 +34,7 @@ const WithWithoutSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-sf-pro text-3xl md:text-5xl font-bold mb-6 text-white">
-            SpeedLead vs. Méthodes traditionnelles
+            SpeedLead AI vs. Méthodes traditionnelles
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Pourquoi les top agents de Montréal abandonnent les appels manuels
@@ -83,8 +83,8 @@ const WithWithoutSection: React.FC = () => {
 
         <div className="text-center mt-12">
           <p className="text-lg text-gray-300 mb-6">
-            Résultat : <span className="text-electric-teal font-semibold">+35% de mandats</span> avec 
-            <span className="text-electric-teal font-semibold"> 50% moins d'effort</span>
+            Résultat : <span className="text-electric-teal font-semibold">+35% de mandats</span> avec
+            <span className="text-electric-teal font-semibold"> 50% moins d'effort</span> grâce à l'AI
           </p>
           <button className="bg-electric-teal text-black font-semibold px-8 py-4 rounded-full hover:bg-electric-teal/90 transition-colors">
             Voir la démo en action

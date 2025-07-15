@@ -10,7 +10,7 @@ const ProblemSection: React.FC = () => {
         </h2>
         
         <p className="text-xl text-gray-300 mb-16 max-w-3xl mx-auto">
-          Chaque minute de retard coûte des milliers en commissions perdues
+          Sans assistant AI, chaque minute de retard coûte des milliers en commissions perdues
         </p>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -47,7 +47,7 @@ const ProblemSection: React.FC = () => {
             Résultat : Vous travaillez plus pour gagner moins
           </p>
           <p className="text-gray-300">
-            Pendant que vos concurrents automatisent et dorment tranquilles, 
+            Pendant que vos concurrents automatisent leur suivi avec de l'AI et dorment tranquilles,
             vous courez après des leads déjà convertis ailleurs.
           </p>
         </div>
