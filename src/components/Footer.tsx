@@ -5,8 +5,29 @@ const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="py-12 px-4 border-t border-white/10">
+    <footer className="py-12 px-4 border-t border-white/10 bg-black">
       <div className="max-w-6xl mx-auto">
+
+        {/* Intro visible et centré */}
+        <div className="text-center mb-8">
+          <img
+            src="https://lh3.googleusercontent.com/ogw/AF2bZyiVyvuxtssMkOk-6s_1iSP2Q4ahVxubRUVxtsCc309Uc38=s64-c-mo"
+            alt="Walid"
+            className="w-10 h-10 rounded-full mx-auto mb-2"
+          />
+          <p className="text-white text-base font-medium">
+            C’est moi, Walid — suivez mon travail sur{' '}
+            <a
+              href="https://www.tiktok.com/@bambalerequin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-electric-teal transition-colors"
+            >
+              @bambalerequin
+            </a>
+          </p>
+        </div>
+
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo & Slogan */}
           <div className="md:col-span-2">
@@ -30,7 +51,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Product Links */}
+          {/* Liens Produit */}
           <div>
             <h3 className="text-white font-semibold mb-4">Produit</h3>
             <ul className="space-y-2">
@@ -41,7 +62,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Support Links */}
+          {/* Liens Support */}
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
@@ -53,35 +74,15 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Barre du bas */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          {/* Copyright */}
+          {/* © */}
           <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
             <MapPin className="w-4 h-4" />
             <span>© {year} SpeedLead Montréal</span>
           </div>
 
-          {/* Intro & Walid sur TikTok */}
-          <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
-            <img
-              src="https://lh3.googleusercontent.com/ogw/AF2bZyiVyvuxtssMkOk-6s_1iSP2Q4ahVxubRUVxtsCc309Uc38=s64-c-mo"
-              alt="Walid"
-              className="w-6 h-6 rounded-full"
-            />
-            <span className="text-sm">
-              C'est moi, Walid – suivez mon travail sur{' '}
-              <a
-                href="https://www.tiktok.com/@bambalerequin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-electric-teal transition-colors"
-              >
-                @bambalerequin
-              </a>
-            </span>
-          </div>
-
-          {/* Legal & Contact Links */}
+          {/* Liens légaux & contact */}
           <div className="flex space-x-6 text-sm">
             <a href="#privacy" className="text-gray-400 hover:text-white transition-colors">
               Confidentialité
