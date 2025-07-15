@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Target, Zap, ArrowRight, CheckCircle } from 'lucide-react';
+import { MessageCircle, ArrowRight, CheckCircle } from 'lucide-react';
 import Header from './components/Header';
 import ProblemSection from './components/ProblemSection';
 import WithWithoutSection from './components/WithWithoutSection';
@@ -57,6 +57,7 @@ const ChatDemo: React.FC = () => {
     setTimeout(() => setMessages(chatSequences[0]), 800);
 
     return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep]);
 
   return (
