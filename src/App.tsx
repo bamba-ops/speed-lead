@@ -141,15 +141,15 @@ const App: React.FC = () => {
       <section className="min-h-screen flex flex-col justify-center items-center px-4 py-20 pt-32 relative">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="font-sf-pro text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-            Répondez à vos leads Centris en{' '}
-            <span className="text-electric-teal">&lt; 30 secondes</span>
+            Répondez à vos leads Centris avec notre bot AI en{' '}
+            <span className="text-electric-teal">&lt; 30&nbsp;secondes</span>
             <br />
-            – même à 2 h du matin.
+            – même à 2&nbsp;h du matin.
           </h1>
           
           <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-16 max-w-4xl mx-auto">
-            Bot SMS bilingue <span className="text-electric-teal font-semibold">FR/EN</span> qui qualifie vos prospects 
-            automatiquement et vous les transfert en temps réel.
+            Bot SMS&nbsp;AI bilingue <span className="text-electric-teal font-semibold">FR/EN</span> pour agents immobiliers qui
+            qualifie vos prospects automatiquement et vous les transfert en temps&nbsp;réel.
           </h2>
 
           {/* Interactive Demo */}

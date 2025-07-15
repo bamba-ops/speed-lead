@@ -8,7 +8,7 @@ const FeaturesSection: React.FC = () => {
     {
       icon: MessageCircle,
       title: "SMS Instantané 24/7",
-      description: "Réponse automatique en moins de 30 secondes, même à 3h du matin. Vos prospects n'attendent jamais."
+      description: "Réponse AI automatique en moins de 30 secondes, même à 3h du matin. Vos prospects n'attendent jamais."
     },
     {
       icon: Brain,
@@ -18,7 +18,7 @@ const FeaturesSection: React.FC = () => {
     {
       icon: Globe,
       title: "Bilingue FR/EN",
-      description: "Détection automatique de la langue. Conversation naturelle en français ou anglais selon le prospect."
+      description: "Détection AI de la langue. Conversation naturelle en français ou anglais selon le prospect."
     },
     {
       icon: Zap,
@@ -51,10 +51,10 @@ const FeaturesSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-sf-pro text-3xl md:text-5xl font-bold mb-6 text-white">
-            Pourquoi SpeedLead transforme votre business
+            Pourquoi SpeedLead AI transforme votre business d'agent immobilier
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            La technologie qui fait la différence entre les agents qui survivent et ceux qui dominent
+            La technologie AI qui fait la différence entre les agents qui survivent et ceux qui dominent
           </p>
         </div>
 

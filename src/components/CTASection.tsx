@@ -13,12 +13,12 @@ const CTASection: React.FC = () => {
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <h2 className="font-sf-pro text-3xl md:text-6xl font-bold mb-6 text-white">
-          Commencez à convertir plus de leads
+          Commencez à convertir plus de leads avec notre bot AI
           <span className="text-electric-teal"> dès aujourd'hui</span>
         </h2>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-          Rejoignez les 200+ agents immobiliers qui ont automatisé leur prospection 
+          Rejoignez les 200+ agents immobiliers qui ont automatisé leur prospection avec l'AI
           et augmenté leurs revenus de 35% en moyenne
         </p>
 
