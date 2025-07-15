@@ -151,6 +151,8 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-white font-inter">
       <Header />
+      <Analytics />
+
 
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col justify-center items-center px-4 py-20 pt-32 relative">
