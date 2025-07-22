@@ -1,26 +1,43 @@
 @import "tailwindcss";
-
+/* 1) Variables CSS pour tes couleurs et polices */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --electric-teal: #00D2FF;
+  --font-inter: 'Inter', sans-serif;
+  --font-sf-pro: 'SF Pro Display', system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 2) Classes utilitaires “à la Tailwind” */
+.bg-electric-teal {
+  /* équivalent bg-electric-teal */
+  --tw-bg-opacity: 1;
+  background-color: var(--electric-teal);
+}
+.text-electric-teal {
+  /* équivalent text-electric-teal */
+  --tw-text-opacity: 1;
+  color: var(--electric-teal);
+}
+.font-inter {
+  /* équivalent font-inter */
+  font-family: var(--font-inter);
+}
+.font-sf-pro {
+  /* équivalent font-sf-pro */
+  font-family: var(--font-sf-pro);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 3) Keyframes et classes d’animation */
+@keyframes fadeInUp {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes chatBubble {
+  0%   { opacity: 0; transform: scale(0.95) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+.animate-chat-bubble {
+  animation: chatBubble 0.5s ease-out;
 }
