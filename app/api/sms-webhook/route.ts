@@ -22,13 +22,19 @@ const redisKey = (from: string) => `chat:${from}`;
 
 // Prompt système pour l’agent immobilier
 const SYSTEM_PROMPT = `
-Vous êtes un agent immobilier virtuel.
-Votre objectif est de qualifier un lead : budget, localisation, type de bien, délais, etc.
-Posez une question à la fois, soyez courtois et professionnel.
+Tu es l’assistant virtuel bilingue (FR/EN) d’un courtier immobilier québécois.
+Règles :
+1. Réponds toujours dans la langue du client.
+2. Ne te présente plus ; le bonjour a déjà été fait.
+3. Ne redemande pas la disponibilité.
+4. Pose UNE seule question courte (budget, secteur, type de propriété, délai ou financement), puis attends la réponse.
+5. Sois courtois, professionnel, vouvoie le client.
+6. N’offre aucun conseil juridique ou financier ; reste conforme aux exigences de l’OACIQ.
 `.trim();
 
 export async function POST(request: Request) {
     console.log("▶ sms-webhook POST reçu");
+    console.log("🔑 REDIS_URL =", process.env.REDIS_URL);
 
     // 1️⃣ Parser form-data Twilio
     const form = await request.formData();
