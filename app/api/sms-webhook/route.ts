@@ -14,29 +14,12 @@ const FROM = process.env.TWILIO_FROM_NUMBER!;
 // — Initialisation OpenAI (v4 SDK)
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// — Stub Redis en mémoire en dev, vraie instance en prod
-type RedisClient = {
-    get(key: string): Promise<string | null>;
-    set(key: string, value: string, mode?: string, duration?: number): Promise<void>;
-};
+// — Connexion Redis unique (dev & prod)
+// Veillez à définir REDIS_URL dans vos envs exactement comme ci-dessous
+// (avec le mot de passe si nécessaire) :
+const redis = new Redis(process.env.REDIS_URL!);
 
-let redisClient: RedisClient;
-if (process.env.NODE_ENV === "development") {
-    // Pas de Redis local ? on stocke en Map
-    const store = new Map<string, string>();
-    redisClient = {
-        get: async (key) => store.get(key) ?? null,
-        set: async (key, value) => {
-            store.set(key, value);
-        },
-    };
-} else {
-    // En prod, REDIS_URL doit être défini ainsi :
-    // redis://:PASSWORD@redis-16206.c14.us-east-1-3.ec2.redns.redis-cloud.com:16206
-    redisClient = new Redis(process.env.REDIS_URL!);
-}
-
-// Helper pour générer la clé par numéro
+// Helper : clé Redis par n° de tel
 const redisKey = (from: string) => `chat:${from}`;
 
 // Prompt système pour l’agent immobilier
@@ -54,20 +37,20 @@ export async function POST(request: Request) {
     const from = String(form.get("From") ?? "");
     const incoming = String(form.get("Body") ?? "");
 
-    // 2️⃣ Charger l’historique depuis Redis ou le stub
-    const raw = await redisClient.get(redisKey(from));
+    // 2️⃣ Charger l’historique depuis Redis
+    const raw = await redis.get(redisKey(from));
     const history: { role: "user" | "assistant"; content: string }[] = raw
         ? JSON.parse(raw)
         : [];
 
-    // 3️⃣ Construire la liste de messages pour l’API
+    // 3️⃣ Préparer la conversation pour ChatGPT
     const messages = [
         { role: "system" as const, content: SYSTEM_PROMPT },
         ...history.slice(-10),
         { role: "user" as const, content: incoming },
     ];
 
-    // 4️⃣ Appel à l’API ChatGPT
+    // 4️⃣ Appeler ChatGPT
     const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages,
@@ -75,15 +58,15 @@ export async function POST(request: Request) {
     });
     const reply = completion.choices[0].message.content.trim();
 
-    // 5️⃣ Mettre à jour l’historique et stocker (24 h)
+    // 5️⃣ Mettre à jour et stocker l’historique (24 h)
     history.push({ role: "user", content: incoming });
     history.push({ role: "assistant", content: reply });
-    await redisClient.set(redisKey(from), JSON.stringify(history), "EX", 60 * 60 * 24);
+    await redis.set(redisKey(from), JSON.stringify(history), "EX", 60 * 60 * 24);
 
     // 6️⃣ Répondre via Twilio
     await twClient.messages.create({ to: from, from: FROM, body: reply });
 
-    // 7️⃣ Renvoyer un TwiML vide pour Twilio
+    // 7️⃣ Retour TwiML
     return new NextResponse(`<Response></Response>`, {
         status: 200,
         headers: { "Content-Type": "text/xml" },
