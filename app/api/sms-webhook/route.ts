@@ -14,12 +14,10 @@ const FROM = process.env.TWILIO_FROM_NUMBER!;
 // — Initialisation OpenAI (v4 SDK)
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// — Connexion Redis unique (dev & prod)
-// Veillez à définir REDIS_URL dans vos envs exactement comme ci-dessous
-// (avec le mot de passe si nécessaire) :
+// — Connexion Redis (Cloud / prod & dev)
 const redis = new Redis(process.env.REDIS_URL!);
 
-// Helper : clé Redis par n° de tel
+// Helper : clé Redis par numéro de téléphone
 const redisKey = (from: string) => `chat:${from}`;
 
 // Prompt système pour l’agent immobilier
@@ -32,7 +30,7 @@ Posez une question à la fois, soyez courtois et professionnel.
 export async function POST(request: Request) {
     console.log("▶ sms-webhook POST reçu");
 
-    // 1️⃣ Parser le form-data de Twilio
+    // 1️⃣ Parser form-data Twilio
     const form = await request.formData();
     const from = String(form.get("From") ?? "");
     const incoming = String(form.get("Body") ?? "");
@@ -43,30 +41,46 @@ export async function POST(request: Request) {
         ? JSON.parse(raw)
         : [];
 
-    // 3️⃣ Préparer la conversation pour ChatGPT
+    // 3️⃣ Construire le tableau de messages
     const messages = [
         { role: "system" as const, content: SYSTEM_PROMPT },
         ...history.slice(-10),
         { role: "user" as const, content: incoming },
     ];
 
-    // 4️⃣ Appeler ChatGPT
+    // 4️⃣ Appel à l’API ChatGPT
     const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages,
         temperature: 0.7,
     });
-    const reply = completion.choices[0].message.content.trim();
 
-    // 5️⃣ Mettre à jour et stocker l’historique (24 h)
+    // 5️⃣ Extraire la réponse en toute sécurité
+    const choice = completion.choices?.[0];
+    const content = choice?.message?.content;
+    if (typeof content !== "string") {
+        console.error("⚠️ OpenAI response malformed", completion);
+        // On renvoie un TwiML vide pour ne pas bloquer Twilio
+        return new NextResponse(`<Response></Response>`, {
+            status: 200,
+            headers: { "Content-Type": "text/xml" },
+        });
+    }
+    const reply = content.trim();
+
+    // 6️⃣ Mettre à jour l’historique et stocker (TTL 24h)
     history.push({ role: "user", content: incoming });
     history.push({ role: "assistant", content: reply });
     await redis.set(redisKey(from), JSON.stringify(history), "EX", 60 * 60 * 24);
 
-    // 6️⃣ Répondre via Twilio
-    await twClient.messages.create({ to: from, from: FROM, body: reply });
+    // 7️⃣ Envoyer la réponse via Twilio
+    await twClient.messages.create({
+        to: from,
+        from: FROM,
+        body: reply,
+    });
 
-    // 7️⃣ Retour TwiML
+    // 8️⃣ Retour TwiML vide
     return new NextResponse(`<Response></Response>`, {
         status: 200,
         headers: { "Content-Type": "text/xml" },
