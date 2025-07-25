@@ -5,35 +5,40 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL!;
-
 export async function POST(request: NextRequest) {
-    // 1️⃣ Récupérer la vraie IP client
+    const data = await request.json();
+
     const forwarded = request.headers.get("x-forwarded-for") ?? "";
     const ip = forwarded.split(",")[0].trim() || "unknown";
-
-    // 2️⃣ User-Agent
     const ua = request.headers.get("user-agent") ?? "unknown";
-
-    // 3️⃣ Localisation via les headers Vercel
-    //    Ces headers sont toujours présents en Edge Runtime
     const city = request.headers.get("x-vercel-ip-city") ?? "unknown";
     const country = request.headers.get("x-vercel-ip-country") ?? "unknown";
 
-    // 4️⃣ Construire le message Discord
+    const source = data.source || "unknown";
+    const utm = data.utm || {};
+    const uaClient = data.uaClient || "unknown";
+    const event = data.event || "visit";
+
+    let title = "👀 **Nouveau visiteur sur SpeedLead**";
+    if (event === "contact_click") {
+        title = "🔔 **Clic sur le bouton 'Contacter le courtier'**";
+    }
+
     const content = [
-        "🔔 **Clique sur “Contacter le courtier”**",
+        title,
         `• IP          : \`${ip}\``,
         `• UA          : \`${ua}\``,
+        `• UA Client   : \`${uaClient}\``,
         `• Localisation: **${city}, ${country}**`,
+        `• Referrer    : ${source}`,
+        `• UTM         : ${JSON.stringify(utm)}`
     ].join("\n");
 
-    // 5️⃣ Envoyer vers Discord
     try {
         await axios.post(WEBHOOK_URL, { content });
     } catch (err) {
         console.error("Erreur webhook Discord :", err);
     }
 
-    // 6️⃣ Réponse JSON
     return NextResponse.json({ success: true }, { status: 200 });
 }

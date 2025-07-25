@@ -33,14 +33,35 @@ export default function CentrisDemo() {
     setTimeout(() => setToast(null), 3400);
   };
 
-  // Envoie une notification Discord à chaque clic sur le bouton
+  // Envoie une notification Discord à chaque clic sur le bouton (avec provenance)
   const notifyClick = async () => {
-    try {
-      await fetch("/api/notify_click", { method: "POST" });
-    } catch (err) {
-      console.error("Notification click failed", err);
-    }
-  };
+  try {
+    const referrer = document.referrer || "direct";
+    const params = new URLSearchParams(window.location.search);
+    const utm = {
+      utm_source: params.get("utm_source"),
+      utm_medium: params.get("utm_medium"),
+      utm_campaign: params.get("utm_campaign"),
+      utm_content: params.get("utm_content"),
+      utm_term: params.get("utm_term"),
+    };
+    const uaClient = navigator.userAgent;
+
+    await fetch("/api/notify_click", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "contact_click", // 👈 Ici !
+        source: referrer,
+        utm,
+        uaClient,
+      }),
+    });
+  } catch (err) {
+    console.error("Notification click failed", err);
+  }
+};
+
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,24 +121,6 @@ export default function CentrisDemo() {
           <span>{toast.message}</span>
         </div>
       )}
-
-      {/* Bandeau d'explication */}
-      <div className="bg-blue-50 border-b border-blue-200 text-blue-900 text-sm px-4 py-3 flex items-center gap-2">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" fill="#2563eb" />
-          <path
-            d="M12 8v4M12 16h.01"
-            stroke="#fff"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-        <span>
-          <strong>Essayez la démo :</strong> cliquez sur{" "}
-          <b>« Contacter le courtier immobilier »</b> ci-dessous pour voir le
-          chatbot IA traiter un lead Centris !
-        </span>
-      </div>
 
       {/* Header Centris */}
       <div className="flex items-center px-4 py-3 border-b border-gray-100">

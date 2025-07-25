@@ -15,7 +15,6 @@ declare global {
 export default function CTASection() {
   const calendlyUrl = "https://calendly.com/w-gharbi-tangerine/demo-speedlead";
 
-  // Injection du CSS & JS Calendly une seule fois
   useEffect(() => {
     if (!document.getElementById("calendly-widget-css")) {
       const link = document.createElement("link");
@@ -33,7 +32,6 @@ export default function CTASection() {
     }
   }, []);
 
-  // Ouverture du popup Calendly
   const openCalendly = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (window.Calendly?.initPopupWidget) {
@@ -89,6 +87,16 @@ export default function CTASection() {
             <span>Réserver ma démo gratuite</span>
             <ArrowRight className="w-5 h-5" />
           </a>
+        </div>
+
+        {/* Badge pour renvoyer vers la démo Hero */}
+        <div className="mt-6 flex justify-center">
+          <div className="inline-flex items-center gap-2 bg-electric-teal/20 border border-electric-teal text-electric-teal font-semibold rounded-full px-4 py-2 animate-bounce shadow">
+            <span className="text-lg sm:text-xl">👆</span>
+            <span>
+              <span className="font-bold">Testez la démo interactive juste au-dessus !</span>
+            </span>
+          </div>
         </div>
 
         {/* Trust Indicators */}

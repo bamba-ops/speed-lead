@@ -1,4 +1,4 @@
-
+// app/components/ProblemSection.tsx
 "use client";
 
 import React from 'react';
@@ -6,52 +6,52 @@ import { AlertTriangle, Clock, TrendingDown } from 'lucide-react';
 
 const ProblemSection: React.FC = () => {
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+    <section className="py-16 px-4 bg-gradient-to-b from-black to-gray-900">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="font-sf-pro text-3xl md:text-5xl font-bold mb-8 text-white">
-          Pendant que vous dormez, vos concurrents <span className="text-red-400">volent vos mandats</span>
+        <h2 className="font-sf-pro text-3xl md:text-5xl font-bold mb-3 text-white">
+          Vos prospects n’attendent pas&nbsp;: <span className="text-red-400">chaque minute compte</span>
         </h2>
-        
-        <p className="text-xl text-gray-300 mb-16 max-w-3xl mx-auto">
-          Sans assistant AI, chaque minute de retard coûte des milliers en commissions perdues
+        <p className="text-base sm:text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
+          Manquer un lead, c’est laisser un mandat (et des milliers&nbsp;$) à la concurrence.
+        </p>
+        <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+          Sans assistant AI, chaque minute de retard coûte cher en commissions perdues.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8">
-            <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-3">Lead froid = Lead mort</h3>
-            <p className="text-gray-400">
-              Après 5 minutes, vos chances de conversion chutent de 80%. 
-              Vos prospects appellent déjà un autre agent.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {/* Pain 1 */}
+          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 transition hover:shadow-lg hover:-translate-y-1">
+            <AlertTriangle className="w-11 h-11 text-red-400 mx-auto mb-3 animate-pulse" />
+            <h3 className="text-lg font-semibold text-white mb-2">Lead froid = lead perdu</h3>
+            <p className="text-gray-400 text-base">
+              Après 5 minutes, vos chances de convertir chutent de 80&nbsp;%. Vos prospects passent à un autre agent.
             </p>
           </div>
-
-          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8">
-            <Clock className="w-12 h-12 text-red-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-3">Nuits blanches garanties</h3>
-            <p className="text-gray-400">
-              Les leads arrivent 24/7. Manquer celui de 2h du matin, 
-              c'est perdre le mandat de 500k$ qui finance vos vacances.
+          {/* Pain 2 */}
+          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 transition hover:shadow-lg hover:-translate-y-1">
+            <Clock className="w-11 h-11 text-red-400 mx-auto mb-3 animate-pulse" />
+            <h3 className="text-lg font-semibold text-white mb-2">Leads 24/7, mais pas vous</h3>
+            <p className="text-gray-400 text-base">
+              Manquer le message de 2h du matin, c’est dire adieu au mandat à 500k$… et à votre week-end.
             </p>
           </div>
-
-          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8">
-            <TrendingDown className="w-12 h-12 text-red-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-3">Réputation en chute libre</h3>
-            <p className="text-gray-400">
-              Clients frustrés = mauvaises reviews. 
-              Votre crédibilité sur Centris s'effrite lead après lead.
+          {/* Pain 3 */}
+          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 transition hover:shadow-lg hover:-translate-y-1">
+            <TrendingDown className="w-11 h-11 text-red-400 mx-auto mb-3 animate-pulse" />
+            <h3 className="text-lg font-semibold text-white mb-2">Votre réputation souffre</h3>
+            <p className="text-gray-400 text-base">
+              Clients déçus = reviews négatives.<br />
+              Chaque lead ignoré nuit à votre crédibilité sur tous les portails.
             </p>
           </div>
         </div>
 
-        <div className="mt-16 bg-red-500/5 border border-red-500/20 rounded-2xl p-8">
-          <p className="text-2xl font-bold text-red-400 mb-4">
-            Résultat : Vous travaillez plus pour gagner moins
+        <div className="mt-12 bg-red-500/5 border border-red-500/20 rounded-2xl p-7">
+          <p className="text-xl font-bold text-red-400 mb-2">
+            Résultat&nbsp;: vous travaillez plus, pour moins de résultats
           </p>
-          <p className="text-gray-300">
-            Pendant que vos concurrents automatisent leur suivi avec de l'AI et dorment tranquilles,
-            vous courez après des leads déjà convertis ailleurs.
+          <p className="text-gray-300 text-base">
+            Pendant que d’autres agents automatisent leur suivi AI et gagnent en tranquillité, vous courez après des leads déjà convertis ailleurs.
           </p>
         </div>
       </div>
