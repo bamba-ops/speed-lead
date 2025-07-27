@@ -22,7 +22,7 @@ export default function HomePage() {
       utm_term: params.get("utm_term"),
     };
     const uaClient = navigator.userAgent;
-    /*
+    
     fetch("/api/notify_click", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ export default function HomePage() {
         uaClient,
       }),
     }).catch(() => {});
-    */
+   
   }, []);
 
   useEffect(() => {
@@ -94,11 +94,11 @@ export default function HomePage() {
             Agent IA bilingue (FR/EN) qui discute par SMS, qualifie en temps réel et réserve votre prochaine visite – 24h/24.
           </h2>
           {/* Demo always below */}
-          <div className="w-full flex justify-center">
-            <div className="w-full max-w-md">
-              <CentrisDemo />
-            </div>
-          </div>
+         <div className="w-full flex justify-center">
+  <div className="w-full flex justify-center">
+    <CentrisDemo />
+  </div>
+</div>
         </div>
       </section>
 
