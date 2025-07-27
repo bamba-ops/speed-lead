@@ -93,14 +93,7 @@ const WithWithoutSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Sticky CTA mobile */}
-      <div className="fixed bottom-0 left-0 right-0 md:hidden px-4 pb-4 z-30 pointer-events-none">
-        <div className="pointer-events-auto">
-          <button className="w-full bg-electric-teal text-black font-bold py-4 rounded-full shadow-lg text-base transition-colors">
-            Voir la démo en action
-          </button>
-        </div>
-      </div>
+    
     </section>
   );
 };
