@@ -99,16 +99,18 @@ export default function CentrisDemo() {
       {/* CARD: grid 2 colonnes, responsive */}
       <div className="grid grid-cols-[100px_1fr] sm:grid-cols-[160px_1fr] lg:grid-cols-[220px_1fr] items-stretch overflow-hidden rounded-2xl">
         {/* Image à gauche, SANS padding/marge */}
-        <div className="relative w-full h-full min-h-[100px] sm:min-h-[160px] lg:min-h-[220px]">
-          <Image
-            src={mainPhoto}
-            alt="Condo"
-            fill
-            className="object-cover"
-            sizes="(max-width: 640px) 100px, (max-width:1024px) 160px, 220px"
-            priority
-          />
-        </div>
+<div className="relative w-full h-full min-h-[100px] sm:min-h-[160px] lg:min-h-[220px]">
+  <img
+    src={mainPhoto}
+    alt="Condo"
+    className="object-cover w-full h-full rounded-none"
+    style={{ display: "block" }}
+    loading="eager"
+    draggable={false}
+  />
+</div>
+
+
         {/* Infos et CTA, padding seulement à droite */}
         <div className="flex flex-col justify-between h-full px-2 py-2 sm:px-3 sm:py-3 lg:px-8 lg:py-8">
           <div>

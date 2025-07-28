@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,6 +29,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+          <Script
+          defer
+          data-website-id="6887e26651a64d0616213762"
+          data-domain="speed-lead.vercel.app"
+          src="https://datafa.st/js/script.js"
+        />
       </body>
     </html>
   );
