@@ -22,7 +22,7 @@ export default function HomePage() {
       utm_term: params.get("utm_term"),
     };
     const uaClient = navigator.userAgent;
-    
+    /*
     fetch("/api/notify_click", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ export default function HomePage() {
         uaClient,
       }),
     }).catch(() => {});
-   
+    */
   }, []);
 
   useEffect(() => {
