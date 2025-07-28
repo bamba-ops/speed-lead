@@ -89,16 +89,6 @@ export default function CTASection() {
           </a>
         </div>
 
-        {/* Badge pour renvoyer vers la démo Hero */}
-        <div className="mt-6 flex justify-center">
-          <div className="inline-flex items-center gap-2 bg-electric-teal/20 border border-electric-teal text-electric-teal font-semibold rounded-full px-4 py-2 animate-bounce shadow">
-            <span className="text-lg sm:text-xl">👆</span>
-            <span>
-              <span className="font-bold">Testez la démo interactive juste au-dessus !</span>
-            </span>
-          </div>
-        </div>
-
         {/* Trust Indicators */}
         <div className="mt-12 pt-8 border-t border-white/10">
           <p className="mb-4 text-gray-400">

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, FormEvent } from "react";
 import Image from "next/image";
 import {
@@ -13,6 +12,7 @@ import {
   CheckCircle,
   AlertCircle,
   Loader2,
+  ArrowDownRight
 } from "lucide-react";
 
 const mainPhoto =
@@ -97,20 +97,20 @@ export default function CentrisDemo() {
       </div>
 
       {/* CARD: grid 2 colonnes, responsive */}
-      <div className="grid grid-cols-[56px_1fr] sm:grid-cols-[80px_1fr] lg:grid-cols-[160px_1fr] gap-2 sm:gap-4 lg:gap-6 items-center px-2 py-2 sm:px-3 sm:py-3 lg:px-8 lg:py-8">
-        {/* Image à gauche */}
-        <div className="relative w-14 h-14 sm:w-20 sm:h-20 lg:w-40 lg:h-40 rounded-xl overflow-hidden">
+      <div className="grid grid-cols-[100px_1fr] sm:grid-cols-[160px_1fr] lg:grid-cols-[220px_1fr] items-stretch overflow-hidden rounded-2xl">
+        {/* Image à gauche, SANS padding/marge */}
+        <div className="relative w-full h-full min-h-[100px] sm:min-h-[160px] lg:min-h-[220px]">
           <Image
             src={mainPhoto}
             alt="Condo"
             fill
             className="object-cover"
-            sizes="(max-width: 640px) 56px, (max-width:1024px) 80px, 160px"
+            sizes="(max-width: 640px) 100px, (max-width:1024px) 160px, 220px"
             priority
           />
         </div>
-        {/* Infos et CTA */}
-        <div className="flex flex-col justify-between min-h-[58px] lg:min-h-[140px]">
+        {/* Infos et CTA, padding seulement à droite */}
+        <div className="flex flex-col justify-between h-full px-2 py-2 sm:px-3 sm:py-3 lg:px-8 lg:py-8">
           <div>
             <div className="text-base sm:text-lg lg:text-3xl font-bold text-gray-900 mb-0.5 leading-snug">
               499 000 $
@@ -134,8 +134,16 @@ export default function CentrisDemo() {
               </div>
             </div>
           </div>
+          {/* BADGE ANIMÉ */}
+          <div className="flex flex-col items-center mt-5 mb-1 sm:mt-4 sm:mb-1">
+            <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-electric-teal/20 border border-electric-teal/40 text-electric-teal text-xs font-bold animate-bounce-slow shadow-badge relative">
+              <ArrowDownRight className="w-4 h-4 animate-arrow-pulse" />
+              Essayez la démo&nbsp;!
+            </span>
+          </div>
+          {/* BOUTON CTA AVEC ANIMATION */}
           <button
-            className="w-full bg-gray-900 text-white font-semibold py-1.5 sm:py-2 lg:py-3 rounded-lg text-xs sm:text-sm lg:text-lg hover:bg-gray-800 transition mt-1"
+            className="w-full bg-gray-900 text-white font-semibold py-3 sm:py-2 lg:py-3 rounded-xl text-base sm:text-sm lg:text-lg hover:bg-gray-800 transition mt-3 sm:mt-1 focus:outline-none focus:ring-4 focus:ring-electric-teal/30 animate-cta-pop"
             onClick={() => {
               notifyClick();
               setPopup(true);
@@ -288,6 +296,39 @@ export default function CentrisDemo() {
       )}
       {/* Animations */}
       <style jsx global>{`
+        /* Badge slow bounce */
+        .animate-bounce-slow {
+          animation: badgebounce 1.5s infinite cubic-bezier(.59,1.54,.48,.92);
+        }
+        @keyframes badgebounce {
+          0%,100%{transform:translateY(0);}
+          20%{transform:translateY(-8px);}
+          45%{transform:translateY(0);}
+          55%{transform:translateY(-3px);}
+          75%{transform:translateY(0);}
+        }
+        /* Arrow pulsing */
+        .animate-arrow-pulse {
+          animation: arrowpulse 1s infinite alternate cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes arrowpulse {
+          from { transform: translateY(0) scale(1);}
+          to   { transform: translateY(2px) scale(1.20);}
+        }
+        /* CTA bouton pulse */
+        .animate-cta-pop {
+          animation: ctaPop 1.7s infinite cubic-bezier(.57,1.36,.65,.88);
+        }
+        @keyframes ctaPop {
+          0%,100% { transform: scale(1);}
+          20% { transform: scale(1.06);}
+          40% { transform: scale(1);}
+        }
+        /* Badge shadow */
+        .shadow-badge {
+          box-shadow: 0 2px 12px 0 rgba(0,220,210,0.11);
+        }
+        /* Animations natives existantes */
         .animate-pop {
           animation: popin 0.33s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
