@@ -17,7 +17,7 @@ export default function HomePage() {
 
   // Exit-intent desktop
   useEffect(() => {
-    const handleMouseOut = (e) => {
+    const handleMouseOut = (e: MouseEvent) => {
       if (
         window.innerWidth >= 768 &&
         e.clientY <= 0 &&
@@ -31,7 +31,7 @@ export default function HomePage() {
     return () => document.removeEventListener("mouseout", handleMouseOut);
   }, []);
 
-  // Exit-intent mobile : scroll vers le haut rapide dans le haut de page
+  // Exit-intent mobile : scroll vers le haut rapide dans le haut de page
   useEffect(() => {
     const handleScroll = () => {
       if (window.innerWidth < 768 && !modalShown.current) {
@@ -111,10 +111,16 @@ export default function HomePage() {
           {/* BADGE + FLECHE ANIMÉE */}
           <div className="flex flex-col items-center mb-3">
             <span className="flex items-center gap-1 px-4 py-1 rounded-full bg-electric-teal/15 border border-electric-teal/40 text-electric-teal text-sm font-semibold animate-badge-bounce shadow-badge select-none mb-1">
-              <svg className="w-4 h-4 mr-1 animate-fleche-bounce" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+              <svg
+                className="w-4 h-4 mr-1 animate-fleche-bounce"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                viewBox="0 0 24 24"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7-7 7-7-7" />
               </svg>
-              Essaie la démo !
+              Essaie la démo !
             </span>
           </div>
           <div className="w-full flex justify-center">
@@ -168,11 +174,7 @@ export default function HomePage() {
                 🚀 Ne partez pas sans votre démo&nbsp;!
               </span>
             </div>
-            <div className={`
-              bg-gradient-to-br from-neutral-900/80 via-indigo-950/90 to-neutral-950/90
-              border border-electric-teal/40 backdrop-blur-xl rounded-2xl shadow-2xl px-6 pt-10 pb-7 relative
-              ring-1 ring-white/5
-            `}>
+            <div className={`bg-gradient-to-br from-neutral-900/80 via-indigo-950/90 to-neutral-950/90 border border-electric-teal/40 backdrop-blur-xl rounded-2xl shadow-2xl px-6 pt-10 pb-7 relative ring-1 ring-white/5`}>
               {/* bouton fermer */}
               <button
                 onClick={() => setShowExitModal(false)}
@@ -201,9 +203,9 @@ export default function HomePage() {
           animation: badgebounce 1.3s infinite cubic-bezier(.59,1.54,.48,.92);
         }
         @keyframes badgebounce {
-          0%,100%{transform:translateY(0);}
-          25%{transform:translateY(-8px);}
-          50%{transform:translateY(0);}
+          0%,100% { transform: translateY(0); }
+          25% { transform: translateY(-8px); }
+          50% { transform: translateY(0); }
         }
         .shadow-badge {
           box-shadow: 0 2px 12px 0 rgba(0,220,210,0.13);
@@ -212,15 +214,15 @@ export default function HomePage() {
           animation: flechebounce 1.3s infinite cubic-bezier(.59,1.54,.48,.92);
         }
         @keyframes flechebounce {
-          0%,100%{transform:translateY(0);}
-          40%{transform:translateY(4px);}
+          0%,100% { transform: translateY(0); }
+          40% { transform: translateY(4px); }
         }
         .animate-modal-pop {
           animation: modalPop 0.38s cubic-bezier(.22,1.02,.34,1.08);
         }
         @keyframes modalPop {
-          0% { opacity: 0; transform: scale(.92) translateY(30px);}
-          100% { opacity: 1; transform: scale(1) translateY(0);}
+          0% { opacity: 0; transform: scale(0.92) translateY(30px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
     </div>
