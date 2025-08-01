@@ -15,12 +15,10 @@ export default function LiveChatDemo() {
   const [loading, setLoading] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
 
-  // Scroll automatique
   useEffect(() => {
     chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
-  // Envoi à l'API OpenAI
   const fetchOpenAI = async (history: ChatMessage[]) => {
     const res = await fetch("/api/chat-demo", {
       method: "POST",
@@ -36,23 +34,22 @@ export default function LiveChatDemo() {
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
-    // ⚠️ On précise le type Message ici
     const newMsg: Message = { from: "user", text: input };
     setMessages(prev => [...prev, newMsg]);
     setInput("");
     setLoading(true);
 
     try {
+      // On cast explicitement chaque entrée en ChatMessage
       const history: ChatMessage[] = [
         ...messages.map(m => ({
           role: m.from === "user" ? "user" : "assistant",
           content: m.text,
-        })),
+        } as ChatMessage)),
         { role: "user", content: input },
       ];
 
       const reply = await fetchOpenAI(history);
-      // ⚠️ Et ici aussi
       const botMsg: Message = { from: "bot", text: reply };
       setMessages(prev => [...prev, botMsg]);
     } catch {
@@ -110,10 +107,7 @@ export default function LiveChatDemo() {
       {/* INPUT */}
       <form
         className="px-2 py-2 border-t border-neutral-800 bg-neutral-950/90 rounded-b-2xl flex gap-2"
-        onSubmit={e => {
-          e.preventDefault();
-          handleSend();
-        }}
+        onSubmit={e => { e.preventDefault(); handleSend(); }}
         autoComplete="off"
       >
         <input
@@ -135,14 +129,8 @@ export default function LiveChatDemo() {
 
       <style jsx global>{`
         @keyframes fadein {
-          0% {
-            opacity: 0;
-            transform: translateY(16px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          0% { opacity: 0; transform: translateY(16px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
