@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, MouseEvent } from "react";
+import React, { useState, useRef, useEffect, MouseEvent as ReactMouseEvent } from "react";
 import { Menu, X } from "lucide-react";
 
 // Logo modernisé
@@ -38,7 +38,7 @@ declare global {
   }
 }
 
-const Header: React.FC = () => {
+export default function Header() {
   const [menu, setMenu] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const calendlyUrl = "https://calendly.com/w-gharbi-tangerine/demo-speedlead";
@@ -64,7 +64,8 @@ const Header: React.FC = () => {
   // Fermer le menu mobile au clic hors
   useEffect(() => {
     if (!menu) return;
-    const handle = (e: MouseEvent) => {
+    // 👇 Ici on précise bien le type DOM global
+    const handle = (e: globalThis.MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setMenu(false);
       }
@@ -80,7 +81,7 @@ const Header: React.FC = () => {
   }, [menu]);
 
   // Ouvre le popup Calendly
-  const openCalendly = (e: MouseEvent<HTMLAnchorElement>) => {
+  const openCalendly = (e: ReactMouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (window.Calendly?.initPopupWidget) {
       window.Calendly.initPopupWidget({ url: calendlyUrl });
@@ -174,6 +175,4 @@ const Header: React.FC = () => {
       </div>
     </header>
   );
-};
-
-export default Header;
+}

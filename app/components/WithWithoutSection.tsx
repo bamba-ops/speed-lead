@@ -87,9 +87,6 @@ const WithWithoutSection: React.FC = () => {
             <span className="text-electric-teal font-bold">+35 % de mandats</span> et 
             <span className="text-electric-teal font-bold"> 50 % moins d’effort</span> chez nos clients AI
           </p>
-          <button className="bg-electric-teal text-black font-semibold px-8 py-4 rounded-full hover:bg-electric-teal/90 transition-colors text-lg shadow-lg">
-            Voir la démo en action
-          </button>
         </div>
       </div>
 
