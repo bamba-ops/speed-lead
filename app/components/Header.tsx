@@ -27,7 +27,6 @@ const Logo = () => (
 
 const NAV = [
   { href: "#fonctionnalites", label: "Fonctionnalités" },
-  { href: "#tarifs", label: "Tarifs" },
   { href: "#faq", label: "FAQ" },
 ];
 

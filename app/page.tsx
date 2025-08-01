@@ -7,48 +7,14 @@ import WithWithoutSection from "./components/WithWithoutSection";
 import FeaturesSection from "./components/FeaturesSection";
 import FAQSection from "./components/FAQSection";
 import CTASection from "./components/CTASection";
-import CentrisDemo from "./components/CentrisDemo";
+import LiveChatDemo from "./components/LiveChatDemo";
 import Footer from "./components/Footer";
 
 export default function HomePage() {
-  const [showExitModal, setShowExitModal] = useState(false);
-  const modalShown = useRef(false);
-  const lastScrollY = useRef(0);
-
-  // Exit-intent desktop
-  useEffect(() => {
-    const handleMouseOut = (e: MouseEvent) => {
-      if (
-        window.innerWidth >= 768 &&
-        e.clientY <= 0 &&
-        !modalShown.current
-      ) {
-        setShowExitModal(true);
-        modalShown.current = true;
-      }
-    };
-    document.addEventListener("mouseout", handleMouseOut);
-    return () => document.removeEventListener("mouseout", handleMouseOut);
-  }, []);
-
-  // Exit-intent mobile : scroll vers le haut rapide dans le haut de page
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerWidth < 768 && !modalShown.current) {
-        const scrollY = window.scrollY;
-        if (
-          scrollY < 200 &&
-          lastScrollY.current - scrollY > 60 // scroll up d’au moins 60px
-        ) {
-          setShowExitModal(true);
-          modalShown.current = true;
-        }
-        lastScrollY.current = scrollY;
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Plus besoin d'exit modal demo
+  // const [showExitModal, setShowExitModal] = useState(false);
+  // const modalShown = useRef(false);
+  // const lastScrollY = useRef(0);
 
   useEffect(() => {
     const referrer = document.referrer || "direct";
@@ -100,14 +66,11 @@ export default function HomePage() {
       <section className="flex flex-col items-center justify-center min-h-screen px-3 pt-[10vh] bg-gradient-to-b from-neutral-950 via-slate-900 to-indigo-950">
         <div className="w-full max-w-lg flex flex-col items-center">
           <h1 className="font-bold text-center text-white text-3xl sm:text-4xl md:text-5xl leading-tight tracking-[-0.01em] mb-2">
-            5 min = mandat perdu
+            L’assistant SMS IA instantané pour les courtiers immobilier
           </h1>
-          <h2 className="text-center text-electric-teal font-semibold text-xl sm:text-2xl md:text-3xl leading-tight mb-3">
-            30 s = lead qualifié
+          <h2 className="text-center text-electric-teal font-semibold text-lg sm:text-xl md:text-2xl leading-tight mb-3">
+            Ne ratez plus aucun contact.
           </h2>
-          <p className="text-center text-gray-300 font-normal text-base sm:text-lg md:text-xl mb-7">
-            Teste-le sur TON numéro, 24 h/24.
-          </p>
           {/* BADGE + FLECHE ANIMÉE */}
           <div className="flex flex-col items-center mb-3">
             <span className="flex items-center gap-1 px-4 py-1 rounded-full bg-electric-teal/15 border border-electric-teal/40 text-electric-teal text-sm font-semibold animate-badge-bounce shadow-badge select-none mb-1">
@@ -124,21 +87,10 @@ export default function HomePage() {
             </span>
           </div>
           <div className="w-full flex justify-center">
-            <CentrisDemo />
+            <LiveChatDemo />
           </div>
-
           {/* BADGES DE CONFIANCE */}
-          <div className="flex flex-row flex-wrap justify-center gap-2 mt-5 mb-1 w-full">
-            <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-900/40 border border-emerald-800/40 text-emerald-300 text-[14px] font-medium shadow-badge">
-              <span className="text-lg leading-none">📈</span>+35&nbsp;% de mandats
-            </span>
-            <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-blue-900/40 border border-blue-800/30 text-blue-200 text-[14px] font-medium shadow-badge">
-              <span className="text-lg leading-none">🔒</span>Conforme Loi 25
-            </span>
-            <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-neutral-800/60 border border-neutral-700 text-white text-[14px] font-medium shadow-badge">
-              <span className="text-lg leading-none">🇨🇦</span>Hébergé au Canada
-            </span>
-          </div>
+         
         </div>
       </section>
 
@@ -165,37 +117,7 @@ export default function HomePage() {
       <CTASection />
       <Footer />
 
-      {/* Exit-intent Modal PREMIUM */}
-      {showExitModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-[2px]">
-          <div className="relative w-full max-w-md mx-3 animate-modal-pop">
-            <div className="absolute -top-5 left-1/2 -translate-x-1/2">
-              <span className="bg-electric-teal/90 text-white text-xs px-3 py-1.5 rounded-full shadow-xl border border-electric-teal font-bold tracking-wide animate-badge-bounce">
-                🚀 Ne partez pas sans votre démo&nbsp;!
-              </span>
-            </div>
-            <div className={`bg-gradient-to-br from-neutral-900/80 via-indigo-950/90 to-neutral-950/90 border border-electric-teal/40 backdrop-blur-xl rounded-2xl shadow-2xl px-6 pt-10 pb-7 relative ring-1 ring-white/5`}>
-              {/* bouton fermer */}
-              <button
-                onClick={() => setShowExitModal(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-electric-teal transition text-2xl font-bold bg-white/0 rounded-full p-1"
-                aria-label="Fermer"
-                type="button"
-                tabIndex={0}
-              >
-                ×
-              </button>
-              <h3 className="text-white text-2xl font-semibold mb-3 text-center drop-shadow-sm">
-                Recevez votre démo gratuite instantanément 🚀
-              </h3>
-              <p className="text-gray-300 text-base text-center mb-6">
-                Entrez votre numéro pour tester le vrai fonctionnement IA sur votre propre téléphone.
-              </p>
-              <CentrisDemo />
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Plus de popup démo ou exit-intent */}
 
       {/* Animations pour le badge et la flèche */}
       <style jsx global>{`
@@ -216,13 +138,6 @@ export default function HomePage() {
         @keyframes flechebounce {
           0%,100% { transform: translateY(0); }
           40% { transform: translateY(4px); }
-        }
-        .animate-modal-pop {
-          animation: modalPop 0.38s cubic-bezier(.22,1.02,.34,1.08);
-        }
-        @keyframes modalPop {
-          0% { opacity: 0; transform: scale(0.92) translateY(30px); }
-          100% { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
     </div>
